@@ -12,7 +12,12 @@
 
     <title>Riviera Transfers - Admin</title>
 
+
     <style>
+
+        /* =========================================
+           GLOBAL
+        ========================================= */
 
         * {
             box-sizing: border-box;
@@ -26,9 +31,10 @@
             color: #222;
         }
 
-        /* =========================
+
+        /* =========================================
            HEADER
-        ========================= */
+        ========================================= */
 
         .admin-header {
             background: #111827;
@@ -46,9 +52,10 @@
             color: #cbd5e1;
         }
 
-        /* =========================
-           CONTAINER
-        ========================= */
+
+        /* =========================================
+           MAIN CONTAINER
+        ========================================= */
 
         .admin-container {
             max-width: 1100px;
@@ -56,8 +63,13 @@
             padding: 0 20px;
         }
 
+
+        /* =========================================
+           PAGE TITLE
+        ========================================= */
+
         .page-title {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .page-title h2 {
@@ -70,9 +82,10 @@
             color: #666;
         }
 
-        /* =========================
-           DASHBOARD STATS
-        ========================= */
+
+        /* =========================================
+           DASHBOARD STATISTICS
+        ========================================= */
 
         .dashboard-stats {
             display: grid;
@@ -101,40 +114,189 @@
             color: #111827;
         }
 
-        /* =========================
+
+        /* =========================================
            BOOKINGS
-        ========================= */
+        ========================================= */
 
         #bookings {
             display: grid;
             gap: 20px;
         }
 
-        .booking-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+        /* =========================================
+   BOOKING CARDS
+========================================= */
+
+#bookings {
+    display: grid;
+    gap: 20px;
+}
+
+.booking-card {
+    padding: 25px;
+    border-radius: 14px;
+    border: 2px solid #e5e7eb;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: 0.2s ease;
+}
+
+/* =========================================
+   PENDING - YELLOW
+========================================= */
+
+.booking-card.status-pending {
+    background: #fff7d6 !important;
+    border: 2px solid #f59e0b !important;
+    border-left: 8px solid #f59e0b !important;
+}
+
+/* =========================================
+   CONFIRMED - GREEN
+========================================= */
+
+.booking-card.status-confirmed {
+    background: #dcfce7 !important;
+    border: 2px solid #22c55e !important;
+    border-left: 8px solid #22c55e !important;
+}
+
+/* =========================================
+   COMPLETED - BLUE
+========================================= */
+
+.booking-card.status-completed {
+    background: #dbeafe !important;
+    border: 2px solid #3b82f6 !important;
+    border-left: 8px solid #3b82f6 !important;
+}
+
+/* =========================================
+   CANCELLED - RED
+========================================= */
+
+.booking-card.status-cancelled {
+    background: #fee2e2 !important;
+    border: 2px solid #ef4444 !important;
+    border-left: 8px solid #ef4444 !important;
+}
+
+
+/* =========================================
+   BOOKING TEXT
+========================================= */
+
+.booking-card h2 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    color: #111827;
+}
+
+.booking-card p {
+    margin: 9px 0;
+    color: #374151;
+}
+
+
+/* =========================================
+   STATUS BADGE
+========================================= */
+
+.status {
+    margin-top: 15px;
+}
+
+.status-badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+
+/* Pending badge */
+
+.status-badge.status-pending {
+    background: #f59e0b;
+    color: white;
+}
+
+
+/* Confirmed badge */
+
+.status-badge.status-confirmed {
+    background: #22c55e;
+    color: white;
+}
+
+
+/* Completed badge */
+
+.status-badge.status-completed {
+    background: #3b82f6;
+    color: white;
+}
+
+
+/* Cancelled badge */
+
+.status-badge.status-cancelled {
+    background: #ef4444;
+    color: white;
+}
+
+
+        /* =========================================
+           PENDING CARD
+        ========================================= */
+
+        .booking-card.status-pending {
+            background: #fffbeb;
+            border-left-color: #f59e0b;
         }
 
-        .booking-card h2 {
-            margin-top: 0;
-            margin-bottom: 18px;
-            color: #111827;
+
+        /* =========================================
+           CONFIRMED CARD
+        ========================================= */
+
+        .booking-card.status-confirmed {
+            background: #f0fdf4;
+            border-left-color: #22c55e;
         }
 
-        .booking-card p {
-            margin: 9px 0;
-            color: #444;
+
+        /* =========================================
+           COMPLETED CARD
+        ========================================= */
+
+        .booking-card.status-completed {
+            background: #eff6ff;
+            border-left-color: #3b82f6;
         }
 
-        /* =========================
+
+        /* =========================================
+           CANCELLED CARD
+        ========================================= */
+
+        .booking-card.status-cancelled {
+            background: #fef2f2;
+            border-left-color: #ef4444;
+        }
+
+
+        /* =========================================
            STATUS
-        ========================= */
+        ========================================= */
 
         .status {
             margin-top: 15px;
+            font-weight: bold;
         }
 
         .status-badge {
@@ -147,29 +309,42 @@
             text-transform: uppercase;
         }
 
-        .status-pending {
+
+        /* Pending */
+
+        .status-badge.status-pending {
             background: #fef3c7;
             color: #92400e;
         }
 
-        .status-confirmed {
+
+        /* Confirmed */
+
+        .status-badge.status-confirmed {
             background: #dcfce7;
             color: #166534;
         }
 
-        .status-completed {
+
+        /* Completed */
+
+        .status-badge.status-completed {
             background: #dbeafe;
             color: #1e40af;
         }
 
-        .status-cancelled {
+
+        /* Cancelled */
+
+        .status-badge.status-cancelled {
             background: #fee2e2;
             color: #991b1b;
         }
 
-        /* =========================
+
+        /* =========================================
            BUTTONS
-        ========================= */
+        ========================================= */
 
         .booking-actions {
             margin-top: 22px;
@@ -185,21 +360,29 @@
             background: #111827;
             color: white;
             font-weight: bold;
+            transition: 0.2s ease;
         }
 
         button:hover {
             opacity: 0.8;
+            transform: translateY(-1px);
         }
+
+
+        /* =========================================
+           HR
+        ========================================= */
 
         hr {
             margin-top: 25px;
             border: 0;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #e5e7eb;
         }
 
-        /* =========================
-           RESPONSIVE
-        ========================= */
+
+        /* =========================================
+           TABLET
+        ========================================= */
 
         @media (max-width: 900px) {
 
@@ -208,6 +391,11 @@
             }
 
         }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
 
         @media (max-width: 600px) {
 
@@ -226,6 +414,7 @@
 
             .dashboard-stats {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
 
             .stat-card {
@@ -246,6 +435,240 @@
             }
 
         }
+        
+        /* =========================================
+   DASHBOARD STAT CARD COLORS
+========================================= */
+
+/* Total Bookings */
+.stat-card:has(#totalBookings) {
+    background: #e0f2fe !important;
+    border: 2px solid #0284c7 !important;
+}
+
+/* Pending */
+.stat-card:has(#pendingBookings) {
+    background: #fef3c7 !important;
+    border: 2px solid #f59e0b !important;
+}
+
+/* Confirmed */
+.stat-card:has(#confirmedBookings) {
+    background: #dcfce7 !important;
+    border: 2px solid #22c55e !important;
+}
+
+/* Completed */
+.stat-card:has(#completedBookings) {
+    background: #dbeafe !important;
+    border: 2px solid #3b82f6 !important;
+}
+
+/* Cancelled */
+.stat-card:has(#cancelledBookings) {
+    background: #fee2e2 !important;
+    border: 2px solid #ef4444 !important;
+}
+
+
+/* Number colors */
+
+.stat-card:has(#totalBookings) .stat-number {
+    color: #0369a1 !important;
+}
+
+.stat-card:has(#pendingBookings) .stat-number {
+    color: #b45309 !important;
+}
+
+.stat-card:has(#confirmedBookings) .stat-number {
+    color: #15803d !important;
+}
+
+.stat-card:has(#completedBookings) .stat-number {
+    color: #1d4ed8 !important;
+}
+
+.stat-card:has(#cancelledBookings) .stat-number {
+    color: #dc2626 !important;
+}
+/* =========================================
+   BOOKING ACTION BUTTON COLORS
+========================================= */
+
+.booking-actions button {
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* Confirm - Green */
+.booking-actions button:nth-child(1) {
+    background: #16a34a;
+}
+
+/* Complete - Blue */
+.booking-actions button:nth-child(2) {
+    background: #2563eb;
+}
+
+/* Cancel - Orange */
+.booking-actions button:nth-child(3) {
+    background: #ea580c;
+}
+
+/* Delete - Red */
+.booking-actions button:nth-child(4) {
+    background: #dc2626;
+}
+
+/* Hover effect */
+.booking-actions button:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+/* =========================================
+   SEARCH & FILTER
+========================================= */
+
+.booking-filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.booking-filters input,
+.booking-filters select {
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    font-size: 15px;
+    outline: none;
+    background: white;
+}
+
+.booking-filters input {
+    flex: 1;
+}
+
+.booking-filters input:focus,
+.booking-filters select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+}
+
+.booking-filters select {
+    min-width: 180px;
+    cursor: pointer;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .booking-filters {
+        flex-direction: column;
+    }
+
+    .booking-filters input,
+    .booking-filters select {
+        width: 100%;
+    }
+
+}
+/* =========================================
+   BOOKING META INFORMATION
+========================================= */
+
+.booking-meta {
+    font-size: 13px !important;
+    color: #6b7280 !important;
+    margin: 5px 0 !important;
+}
+
+.booking-meta strong {
+    color: #374151;
+}
+
+.booking-meta:first-of-type {
+    margin-top: -10px !important;
+}
+
+.booking-meta:nth-of-type(2) {
+    margin-bottom: 18px !important;
+}
+
+.copy-id-button {
+    padding: 5px 9px;
+    margin-left: 8px;
+    margin-bottom: 0;
+    background: #374151;
+    color: white;
+    font-size: 11px;
+    border-radius: 5px;
+}
+
+.copy-id-button:hover {
+    background: #111827;
+}
+
+/* =========================================
+   PAGE TITLE + REFRESH BUTTON
+========================================= */
+
+.page-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.refresh-button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0;
+    transition: 0.2s ease;
+}
+
+.refresh-button:hover {
+    background: #1d4ed8;
+    opacity: 1;
+}
+
+.refresh-button:active {
+    transform: scale(0.97);
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .page-title-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .refresh-button {
+        width: 100%;
+    }
+
+}
 
     </style>
 
@@ -254,45 +677,73 @@
 
 <body>
 
-    <!-- =========================
+
+    <!-- =========================================
          HEADER
-    ========================= -->
+    ========================================= -->
 
     <header class="admin-header">
 
-        <h1>Riviera Transfers</h1>
+        <h1>
+            Riviera Transfers
+        </h1>
 
-        <p>Admin Dashboard</p>
+        <p>
+            Admin Dashboard
+        </p>
 
     </header>
 
 
-    <!-- =========================
+    <!-- =========================================
          MAIN
-    ========================= -->
+    ========================================= -->
 
     <main class="admin-container">
 
-        <div class="page-title">
 
+        <!-- PAGE TITLE -->
+
+       <div class="page-title">
+
+    <div class="page-title-row">
+
+        <div>
             <h2>Bookings</h2>
 
             <p>
                 Manage all transfer bookings from here.
             </p>
-
+            <p class="last-updated">
+    Last updated: <span id="lastUpdated">Never</span>
+</p>
         </div>
 
+        <button
+            type="button"
+            class="refresh-button"
+            onclick="loadBookings()"
+        >
+            🔄 Refresh Bookings
+        </button>
 
-        <!-- =========================
+    </div>
+
+</div>
+
+
+        <!-- =====================================
              DASHBOARD STATISTICS
-        ========================= -->
+        ====================================== -->
 
         <div class="dashboard-stats">
 
+
             <div class="stat-card">
 
-                <h3>Total Bookings</h3>
+                <h3>
+                    Total Bookings
+                </h3>
 
                 <div
                     class="stat-number"
@@ -306,7 +757,9 @@
 
             <div class="stat-card">
 
-                <h3>Pending</h3>
+                <h3>
+                    Pending
+                </h3>
 
                 <div
                     class="stat-number"
@@ -320,7 +773,9 @@
 
             <div class="stat-card">
 
-                <h3>Confirmed</h3>
+                <h3>
+                    Confirmed
+                </h3>
 
                 <div
                     class="stat-number"
@@ -334,7 +789,9 @@
 
             <div class="stat-card">
 
-                <h3>Completed</h3>
+                <h3>
+                    Completed
+                </h3>
 
                 <div
                     class="stat-number"
@@ -348,7 +805,9 @@
 
             <div class="stat-card">
 
-                <h3>Cancelled</h3>
+                <h3>
+                    Cancelled
+                </h3>
 
                 <div
                     class="stat-number"
@@ -359,12 +818,51 @@
 
             </div>
 
+
         </div>
 
 
-        <!-- =========================
+        <!-- =====================================
              BOOKINGS LIST
-        ========================= -->
+        ====================================== -->
+       
+        <!-- =========================
+     SEARCH & FILTER
+========================= -->
+
+<div class="booking-filters">
+
+    <input
+        type="text"
+        id="bookingSearch"
+        placeholder="Search by name or phone..."
+    >
+
+    <select id="statusFilter">
+
+        <option value="all">
+            All Bookings
+        </option>
+
+        <option value="pending">
+            Pending
+        </option>
+
+        <option value="confirmed">
+            Confirmed
+        </option>
+
+        <option value="completed">
+            Completed
+        </option>
+
+        <option value="cancelled">
+            Cancelled
+        </option>
+
+    </select>
+
+</div>
 
         <div id="bookings">
 
@@ -372,484 +870,16 @@
 
         </div>
 
+
     </main>
 
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================= -->
+    <!-- =========================================
+         EXTERNAL JAVASCRIPT
+    ========================================= -->
 
-    <script>
+    <script src="/admin/js/script.js"></script>
 
-        console.log("ADMIN PAGE SCRIPT STARTED");
-
-
-        /* =========================================
-           LOAD BOOKINGS
-        ========================================= */
-
-        async function loadBookings() {
-
-            const container =
-                document.getElementById("bookings");
-
-
-            try {
-
-                container.innerHTML =
-                    "Loading bookings...";
-
-
-                const response =
-                    await fetch("/api/bookings");
-
-
-                console.log(
-                    "API status:",
-                    response.status
-                );
-
-
-                const data =
-                    await response.json();
-
-
-                console.log(
-                    "API data:",
-                    data
-                );
-
-
-                if (!data.success) {
-
-                    container.innerHTML =
-                        "<p>Unable to load bookings.</p>";
-
-                    return;
-                }
-
-
-                updateDashboardStats(
-                    data.bookings || []
-                );
-
-
-                displayBookings(
-                    data.bookings || []
-                );
-
-
-            } catch (error) {
-
-                console.error(
-                    "Load bookings error:",
-                    error
-                );
-
-
-                container.innerHTML =
-                    "<p>Error loading bookings.</p>";
-
-            }
-
-        }
-
-
-        /* =========================================
-           DASHBOARD STATISTICS
-        ========================================= */
-
-        function updateDashboardStats(bookings) {
-
-            const total =
-                bookings.length;
-
-
-            const pending =
-                bookings.filter(function(booking) {
-
-                    return booking.status === "pending";
-
-                }).length;
-
-
-            const confirmed =
-                bookings.filter(function(booking) {
-
-                    return booking.status === "confirmed";
-
-                }).length;
-
-
-            const completed =
-                bookings.filter(function(booking) {
-
-                    return booking.status === "completed";
-
-                }).length;
-
-
-            const cancelled =
-                bookings.filter(function(booking) {
-
-                    return booking.status === "cancelled";
-
-                }).length;
-
-
-            document.getElementById(
-                "totalBookings"
-            ).textContent = total;
-
-
-            document.getElementById(
-                "pendingBookings"
-            ).textContent = pending;
-
-
-            document.getElementById(
-                "confirmedBookings"
-            ).textContent = confirmed;
-
-
-            document.getElementById(
-                "completedBookings"
-            ).textContent = completed;
-
-
-            document.getElementById(
-                "cancelledBookings"
-            ).textContent = cancelled;
-
-        }
-
-
-        /* =========================================
-           DISPLAY BOOKINGS
-        ========================================= */
-
-        function displayBookings(bookings) {
-
-            const container =
-                document.getElementById("bookings");
-
-
-            if (
-                !bookings ||
-                bookings.length === 0
-            ) {
-
-                container.innerHTML =
-                    "<p>No bookings found.</p>";
-
-                return;
-            }
-
-
-            container.innerHTML = "";
-
-
-            bookings.forEach(function(booking) {
-
-                const card =
-                    document.createElement("div");
-
-
-                card.className =
-                    "booking-card";
-
-
-                card.innerHTML = `
-
-                    <h2>
-                        ${booking.name}
-                    </h2>
-
-
-                    <p>
-                        <strong>Phone:</strong>
-                        ${booking.phone}
-                    </p>
-
-
-                    <p>
-                        <strong>Pickup:</strong>
-                        ${booking.pickup}
-                    </p>
-
-
-                    <p>
-                        <strong>Drop-off:</strong>
-                        ${booking.dropoff}
-                    </p>
-
-
-                    <p>
-                        <strong>Date:</strong>
-                        ${booking.date}
-                    </p>
-
-
-                    <p>
-                        <strong>Time:</strong>
-                        ${booking.time}
-                    </p>
-
-
-                    <p>
-                        <strong>Passengers:</strong>
-                        ${booking.passengers}
-                    </p>
-
-
-                    <p>
-                        <strong>Vehicle:</strong>
-                        ${booking.vehicle}
-                    </p>
-
-
-                    <p class="status">
-
-                        <strong>Status:</strong>
-
-                        <span class="status-badge status-${booking.status}">
-                            ${booking.status}
-                        </span>
-
-                    </p>
-
-
-                    <div class="booking-actions">
-
-                        <button
-                            onclick="updateStatus(
-                                '${booking._id}',
-                                'confirmed'
-                            )"
-                        >
-                            Confirm
-                        </button>
-
-
-                        <button
-                            onclick="updateStatus(
-                                '${booking._id}',
-                                'completed'
-                            )"
-                        >
-                            Complete
-                        </button>
-
-
-                        <button
-                            onclick="updateStatus(
-                                '${booking._id}',
-                                'cancelled'
-                            )"
-                        >
-                            Cancel
-                        </button>
-
-
-                        <button
-                            onclick="deleteBooking(
-                                '${booking._id}'
-                            )"
-                        >
-                            Delete
-                        </button>
-
-                    </div>
-
-
-                    <hr>
-
-                `;
-
-
-                container.appendChild(card);
-
-            });
-
-        }
-
-
-        /* =========================================
-           UPDATE BOOKING STATUS
-        ========================================= */
-
-        async function updateStatus(
-            bookingId,
-            status
-        ) {
-
-            console.log(
-                "Updating booking:",
-                bookingId,
-                status
-            );
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        "/api/bookings/" +
-                        bookingId +
-                        "/status",
-                        {
-                            method: "PATCH",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body: JSON.stringify({
-                                status: status
-                            })
-                        }
-                    );
-
-
-                const data =
-                    await response.json();
-
-
-                console.log(
-                    "Status response:",
-                    data
-                );
-
-
-                if (!data.success) {
-
-                    alert(
-                        data.message ||
-                        "Unable to update booking status."
-                    );
-
-                    return;
-                }
-
-
-                alert(
-                    "Booking status updated to: " +
-                    status
-                );
-
-
-                loadBookings();
-
-
-            } catch (error) {
-
-                console.error(
-                    "Status update error:",
-                    error
-                );
-
-
-                alert(
-                    "Unable to update booking status."
-                );
-
-            }
-
-        }
-
-
-        /* =========================================
-           DELETE BOOKING
-        ========================================= */
-
-        async function deleteBooking(
-            bookingId
-        ) {
-
-            const confirmed =
-                confirm(
-                    "Are you sure you want to delete this booking?"
-                );
-
-
-            if (!confirmed) {
-
-                return;
-            }
-
-
-            console.log(
-                "Deleting booking:",
-                bookingId
-            );
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        "/api/bookings/" +
-                        bookingId,
-                        {
-                            method: "DELETE"
-                        }
-                    );
-
-
-                const data =
-                    await response.json();
-
-
-                console.log(
-                    "Delete response:",
-                    data
-                );
-
-
-                if (!data.success) {
-
-                    alert(
-                        data.message ||
-                        "Unable to delete booking."
-                    );
-
-                    return;
-                }
-
-
-                alert(
-                    "Booking deleted successfully."
-                );
-
-
-                loadBookings();
-
-
-            } catch (error) {
-
-                console.error(
-                    "Delete booking error:",
-                    error
-                );
-
-
-                alert(
-                    "Unable to delete booking."
-                );
-
-            }
-
-        }
-
-
-        /* =========================================
-           START
-        ========================================= */
-
-        loadBookings();
-
-    </script>
 
 </body>
 
