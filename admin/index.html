@@ -61,7 +61,52 @@
         margin-top: 6px;
         color: #666;
     }
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
 
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+}
+
+.stat-card h3 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.stat-card .stat-number {
+    font-size: 28px;
+    font-weight: bold;
+    color: #111827;
+}
+
+@media (max-width: 900px) {
+
+    .dashboard-stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-card .stat-number {
+        font-size: 24px;
+    }
+
+}
     #bookings {
         display: grid;
         gap: 20px;
@@ -168,7 +213,34 @@
 
         </div>
 
+<div class="dashboard-stats">
 
+    <div class="stat-card">
+        <h3>Total Bookings</h3>
+        <div class="stat-number" id="totalBookings">0</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Pending</h3>
+        <div class="stat-number" id="pendingBookings">0</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Confirmed</h3>
+        <div class="stat-number" id="confirmedBookings">0</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Completed</h3>
+        <div class="stat-number" id="completedBookings">0</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Cancelled</h3>
+        <div class="stat-number" id="cancelledBookings">0</div>
+    </div>
+
+</div>
         <div id="bookings">
             Loading bookings...
         </div>

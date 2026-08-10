@@ -29,7 +29,9 @@ async function loadBookings() {
             return;
         }
 
-        displayBookings(data.bookings);
+       updateDashboardStats(data.bookings);
+
+       displayBookings(data.bookings);
 
     } catch (error) {
 
@@ -249,4 +251,46 @@ async function deleteBooking(bookingId) {
         );
 
     }
+}
+function updateDashboardStats(bookings) {
+
+    const total =
+        bookings.length;
+
+    const pending =
+        bookings.filter(function(booking) {
+            return booking.status === "pending";
+        }).length;
+
+    const confirmed =
+        bookings.filter(function(booking) {
+            return booking.status === "confirmed";
+        }).length;
+
+    const completed =
+        bookings.filter(function(booking) {
+            return booking.status === "completed";
+        }).length;
+
+    const cancelled =
+        bookings.filter(function(booking) {
+            return booking.status === "cancelled";
+        }).length;
+
+
+    document.getElementById("totalBookings").textContent =
+        total;
+
+    document.getElementById("pendingBookings").textContent =
+        pending;
+
+    document.getElementById("confirmedBookings").textContent =
+        confirmed;
+
+    document.getElementById("completedBookings").textContent =
+        completed;
+
+    document.getElementById("cancelledBookings").textContent =
+        cancelled;
+
 }
