@@ -14,185 +14,249 @@
 
     <style>
 
-    * {
-        box-sizing: border-box;
-    }
+        * {
+            box-sizing: border-box;
+        }
 
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background: #f5f7fa;
-        color: #222;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f7fa;
+            color: #222;
+        }
 
-    .admin-header {
-        background: #111827;
-        color: white;
-        padding: 25px 30px;
-    }
-
-    .admin-header h1 {
-        margin: 0;
-        font-size: 28px;
-    }
-
-    .admin-header p {
-        margin: 8px 0 0;
-        color: #cbd5e1;
-    }
-
-    .admin-container {
-        max-width: 1100px;
-        margin: 30px auto;
-        padding: 0 20px;
-    }
-
-    .page-title {
-        margin-bottom: 20px;
-    }
-
-    .page-title h2 {
-        margin: 0;
-        font-size: 24px;
-    }
-
-    .page-title p {
-        margin-top: 6px;
-        color: #666;
-    }
-.dashboard-stats {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.stat-card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-}
-
-.stat-card h3 {
-    margin: 0 0 10px;
-    font-size: 14px;
-    color: #6b7280;
-}
-
-.stat-card .stat-number {
-    font-size: 28px;
-    font-weight: bold;
-    color: #111827;
-}
-
-@media (max-width: 900px) {
-
-    .dashboard-stats {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-}
-
-@media (max-width: 600px) {
-
-    .dashboard-stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .stat-card .stat-number {
-        font-size: 24px;
-    }
-
-}
-    #bookings {
-        display: grid;
-        gap: 20px;
-    }
-
-    .booking-card {
-        background: white;
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-        border: 1px solid #e5e7eb;
-    }
-
-    .booking-card h2 {
-        margin-top: 0;
-        margin-bottom: 18px;
-        color: #111827;
-    }
-
-    .booking-card p {
-        margin: 9px 0;
-        color: #444;
-    }
-
-    .booking-actions {
-        margin-top: 22px;
-    }
-
-    button {
-        padding: 10px 16px;
-        margin-right: 8px;
-        margin-bottom: 8px;
-        cursor: pointer;
-        border: none;
-        border-radius: 6px;
-        background: #111827;
-        color: white;
-        font-weight: bold;
-    }
-
-    button:hover {
-        opacity: 0.8;
-    }
-
-    .status {
-        font-weight: bold;
-    }
-
-    hr {
-        margin-top: 25px;
-        border: 0;
-        border-top: 1px solid #eee;
-    }
-
-    @media (max-width: 600px) {
+        /* =========================
+           HEADER
+        ========================= */
 
         .admin-header {
-            padding: 20px;
+            background: #111827;
+            color: white;
+            padding: 25px 30px;
         }
 
         .admin-header h1 {
-            font-size: 22px;
+            margin: 0;
+            font-size: 28px;
         }
 
+        .admin-header p {
+            margin: 8px 0 0;
+            color: #cbd5e1;
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
         .admin-container {
-            margin: 20px auto;
-            padding: 0 15px;
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            margin-bottom: 20px;
+        }
+
+        .page-title h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .page-title p {
+            margin-top: 6px;
+            color: #666;
+        }
+
+        /* =========================
+           DASHBOARD STATS
+        ========================= */
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .stat-card h3 {
+            margin: 0 0 10px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        /* =========================
+           BOOKINGS
+        ========================= */
+
+        #bookings {
+            display: grid;
+            gap: 20px;
         }
 
         .booking-card {
-            padding: 18px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .booking-card h2 {
+            margin-top: 0;
+            margin-bottom: 18px;
+            color: #111827;
+        }
+
+        .booking-card p {
+            margin: 9px 0;
+            color: #444;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status {
+            margin-top: 15px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-confirmed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-completed {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .booking-actions {
+            margin-top: 22px;
         }
 
         button {
-            width: 100%;
-            margin-right: 0;
+            padding: 10px 16px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            background: #111827;
+            color: white;
+            font-weight: bold;
         }
 
-    }
+        button:hover {
+            opacity: 0.8;
+        }
 
-</style>
+        hr {
+            margin-top: 25px;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .dashboard-stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .admin-header {
+                padding: 20px;
+            }
+
+            .admin-header h1 {
+                font-size: 22px;
+            }
+
+            .admin-container {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+
+            .dashboard-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-number {
+                font-size: 24px;
+            }
+
+            .booking-card {
+                padding: 18px;
+            }
+
+            button {
+                width: 100%;
+                margin-right: 0;
+            }
+
+        }
+
+    </style>
 
 </head>
 
 
 <body>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
 
     <header class="admin-header">
 
@@ -203,50 +267,117 @@
     </header>
 
 
+    <!-- =========================
+         MAIN
+    ========================= -->
+
     <main class="admin-container">
 
         <div class="page-title">
 
             <h2>Bookings</h2>
 
-            <p>Manage all transfer bookings from here.</p>
+            <p>
+                Manage all transfer bookings from here.
+            </p>
 
         </div>
 
-<div class="dashboard-stats">
 
-    <div class="stat-card">
-        <h3>Total Bookings</h3>
-        <div class="stat-number" id="totalBookings">0</div>
-    </div>
+        <!-- =========================
+             DASHBOARD STATISTICS
+        ========================= -->
 
-    <div class="stat-card">
-        <h3>Pending</h3>
-        <div class="stat-number" id="pendingBookings">0</div>
-    </div>
+        <div class="dashboard-stats">
 
-    <div class="stat-card">
-        <h3>Confirmed</h3>
-        <div class="stat-number" id="confirmedBookings">0</div>
-    </div>
+            <div class="stat-card">
 
-    <div class="stat-card">
-        <h3>Completed</h3>
-        <div class="stat-number" id="completedBookings">0</div>
-    </div>
+                <h3>Total Bookings</h3>
 
-    <div class="stat-card">
-        <h3>Cancelled</h3>
-        <div class="stat-number" id="cancelledBookings">0</div>
-    </div>
+                <div
+                    class="stat-number"
+                    id="totalBookings"
+                >
+                    0
+                </div>
 
-</div>
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>Pending</h3>
+
+                <div
+                    class="stat-number"
+                    id="pendingBookings"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>Confirmed</h3>
+
+                <div
+                    class="stat-number"
+                    id="confirmedBookings"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>Completed</h3>
+
+                <div
+                    class="stat-number"
+                    id="completedBookings"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>Cancelled</h3>
+
+                <div
+                    class="stat-number"
+                    id="cancelledBookings"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             BOOKINGS LIST
+        ========================= -->
+
         <div id="bookings">
+
             Loading bookings...
+
         </div>
 
     </main>
 
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
 
     <script>
 
@@ -264,6 +395,10 @@
 
 
             try {
+
+                container.innerHTML =
+                    "Loading bookings...";
+
 
                 const response =
                     await fetch("/api/bookings");
@@ -294,19 +429,14 @@
                 }
 
 
-                if (
-                    !data.bookings ||
-                    data.bookings.length === 0
-                ) {
-
-                    container.innerHTML =
-                        "<p>No bookings found.</p>";
-
-                    return;
-                }
+                updateDashboardStats(
+                    data.bookings || []
+                );
 
 
-                displayBookings(data.bookings);
+                displayBookings(
+                    data.bookings || []
+                );
 
 
             } catch (error) {
@@ -326,6 +456,75 @@
 
 
         /* =========================================
+           DASHBOARD STATISTICS
+        ========================================= */
+
+        function updateDashboardStats(bookings) {
+
+            const total =
+                bookings.length;
+
+
+            const pending =
+                bookings.filter(function(booking) {
+
+                    return booking.status === "pending";
+
+                }).length;
+
+
+            const confirmed =
+                bookings.filter(function(booking) {
+
+                    return booking.status === "confirmed";
+
+                }).length;
+
+
+            const completed =
+                bookings.filter(function(booking) {
+
+                    return booking.status === "completed";
+
+                }).length;
+
+
+            const cancelled =
+                bookings.filter(function(booking) {
+
+                    return booking.status === "cancelled";
+
+                }).length;
+
+
+            document.getElementById(
+                "totalBookings"
+            ).textContent = total;
+
+
+            document.getElementById(
+                "pendingBookings"
+            ).textContent = pending;
+
+
+            document.getElementById(
+                "confirmedBookings"
+            ).textContent = confirmed;
+
+
+            document.getElementById(
+                "completedBookings"
+            ).textContent = completed;
+
+
+            document.getElementById(
+                "cancelledBookings"
+            ).textContent = cancelled;
+
+        }
+
+
+        /* =========================================
            DISPLAY BOOKINGS
         ========================================= */
 
@@ -333,6 +532,18 @@
 
             const container =
                 document.getElementById("bookings");
+
+
+            if (
+                !bookings ||
+                bookings.length === 0
+            ) {
+
+                container.innerHTML =
+                    "<p>No bookings found.</p>";
+
+                return;
+            }
 
 
             container.innerHTML = "";
@@ -354,45 +565,59 @@
                         ${booking.name}
                     </h2>
 
+
                     <p>
                         <strong>Phone:</strong>
                         ${booking.phone}
                     </p>
+
 
                     <p>
                         <strong>Pickup:</strong>
                         ${booking.pickup}
                     </p>
 
+
                     <p>
                         <strong>Drop-off:</strong>
                         ${booking.dropoff}
                     </p>
+
 
                     <p>
                         <strong>Date:</strong>
                         ${booking.date}
                     </p>
 
+
                     <p>
                         <strong>Time:</strong>
                         ${booking.time}
                     </p>
+
 
                     <p>
                         <strong>Passengers:</strong>
                         ${booking.passengers}
                     </p>
 
+
                     <p>
                         <strong>Vehicle:</strong>
                         ${booking.vehicle}
                     </p>
 
+
                     <p class="status">
+
                         <strong>Status:</strong>
-                        ${booking.status}
+
+                        <span class="status-badge status-${booking.status}">
+                            ${booking.status}
+                        </span>
+
                     </p>
+
 
                     <div class="booking-actions">
 
@@ -435,6 +660,7 @@
                         </button>
 
                     </div>
+
 
                     <hr>
 
@@ -550,7 +776,6 @@
             if (!confirmed) {
 
                 return;
-
             }
 
 
