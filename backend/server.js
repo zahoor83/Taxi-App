@@ -8,7 +8,7 @@ const bookingRoutes = require("./routes/bookingRoutes");
 
 const app = express();
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 
 /* ================================
@@ -50,7 +50,7 @@ const startServer = async () => {
 
     await connectDatabase();
 
-    app.listen(PORT, () => {
+    app.listen(PORT, "0.0.0.0", () => {
 
         console.log(
             "Riviera Transfers server running on http://localhost:" + PORT
