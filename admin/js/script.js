@@ -1,25 +1,91 @@
 console.log("ADMIN SCRIPT LOADED");
 
-document.addEventListener("DOMContentLoaded", loadBookings);
+
+/* =========================================
+   GLOBAL BOOKINGS
+========================================= */
+
+let allBookings = [];
 
 
 /* =========================================
-   LOAD ALL BOOKINGS
+   PAGE LOAD
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadBookings();
+
+
+        const searchInput =
+            document.getElementById(
+                "bookingSearch"
+            );
+
+
+        const statusFilter =
+            document.getElementById(
+                "statusFilter"
+            );
+
+
+        if (searchInput) {
+
+            searchInput.addEventListener(
+                "input",
+                filterBookings
+            );
+
+        }
+
+
+        if (statusFilter) {
+
+            statusFilter.addEventListener(
+                "change",
+                filterBookings
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   LOAD BOOKINGS
 ========================================= */
 
 async function loadBookings() {
 
     const container =
-        document.getElementById("bookings");
+        document.getElementById(
+            "bookings"
+        );
+
+
+    if (!container) {
+
+        console.error(
+            "Bookings container not found."
+        );
+
+        return;
+    }
+
 
     try {
 
         container.innerHTML =
-            "Loading bookings...";
+            "<p>Loading bookings...</p>";
 
 
         const response =
-            await fetch("/api/bookings");
+            await fetch(
+                "/api/bookings"
+            );
 
 
         console.log(
@@ -30,15 +96,7 @@ async function loadBookings() {
 
         const data =
             await response.json();
-        const lastUpdated =
-    document.getElementById("lastUpdated");
 
-if (lastUpdated) {
-
-    lastUpdated.textContent =
-        new Date().toLocaleString();
-
-}
 
         console.log(
             "API data:",
@@ -55,18 +113,32 @@ if (lastUpdated) {
         }
 
 
-        const bookings =
+        allBookings =
             data.bookings || [];
 
 
         updateDashboardStats(
-            bookings
+            allBookings
         );
 
 
         displayBookings(
-            bookings
+            allBookings
         );
+
+
+        const lastUpdated =
+            document.getElementById(
+                "lastUpdated"
+            );
+
+
+        if (lastUpdated) {
+
+            lastUpdated.textContent =
+                new Date().toLocaleString();
+
+        }
 
 
     } catch (error) {
@@ -92,7 +164,19 @@ if (lastUpdated) {
 function displayBookings(bookings) {
 
     const container =
-        document.getElementById("bookings");
+        document.getElementById(
+            "bookings"
+        );
+
+
+    if (!container) {
+
+        console.error(
+            "Bookings container not found."
+        );
+
+        return;
+    }
 
 
     if (
@@ -110,152 +194,350 @@ function displayBookings(bookings) {
     container.innerHTML = "";
 
 
-    bookings.forEach(function(booking) {
-
-        const card =
-            document.createElement("div");
+    bookings.forEach(
+        function (booking) {
 
 
-        /*
-         * IMPORTANT:
-         * Card gets a class according to status.
-         */
-
-        card.className =
-            "booking-card status-" +
-            booking.status;
+            const card =
+                document.createElement(
+                    "div"
+                );
 
 
-        card.innerHTML = `
-
-            <h2>
-                ${booking.name}
-            </h2>
-        <p class="booking-meta">
-    <strong>Booking ID:</strong>
-    <span id="booking-id-${booking._id}">
-        ${booking._id}
-    </span>
-
-    <button
-    class="copy-id-button"
-    onclick="copyBookingId('${booking._id}', this)"
->
-    Copy
-</button>
-</p>
-
-<p class="booking-meta">
-    <strong>Created:</strong>
-    ${new Date(booking.createdAt).toLocaleString()}
-</p>
-
-            <p>
-                <strong>Phone:</strong>
-                ${booking.phone}
-            </p>
+            card.className =
+                "booking-card status-" +
+                (booking.status || "pending");
 
 
-            <p>
-                <strong>Pickup:</strong>
-                ${booking.pickup}
-            </p>
+            card.innerHTML = `
+
+                <h2>
+                    ${escapeHTML(
+                        booking.name
+                    )}
+                </h2>
 
 
-            <p>
-                <strong>Drop-off:</strong>
-                ${booking.dropoff}
-            </p>
+                <p class="booking-meta">
+
+                    <strong>
+                        Booking ID:
+                    </strong>
+
+                    <span>
+                        ${escapeHTML(
+                            booking._id
+                        )}
+                    </span>
+
+                    <button
+                        type="button"
+                        class="copy-id-button"
+                        onclick="copyBookingId(
+                            '${booking._id}',
+                            this
+                        )"
+                    >
+                        Copy
+                    </button>
+
+                </p>
 
 
-            <p>
-                <strong>Date:</strong>
-                ${booking.date}
-            </p>
+                <p class="booking-meta">
+
+                    <strong>
+                        Created:
+                    </strong>
+
+                    ${new Date(
+                        booking.createdAt
+                    ).toLocaleString()}
+
+                </p>
 
 
-            <p>
-                <strong>Time:</strong>
-                ${booking.time}
-            </p>
+                <!-- =================================
+                     BOOKING DETAIL BOXES
+                ================================== -->
+
+                <div class="booking-details">
 
 
-            <p>
-                <strong>Passengers:</strong>
-                ${booking.passengers}
-            </p>
+                    <div class="booking-detail">
+
+                        <strong>
+                            Phone
+                        </strong>
+
+                        <span>
+                            ${escapeHTML(
+                                booking.phone
+                            )}
+                        </span>
+
+                    </div>
 
 
-            <p>
-                <strong>Vehicle:</strong>
-                ${booking.vehicle}
-            </p>
+                    <div class="booking-detail">
+
+                        <strong>
+                            Pickup
+                        </strong>
+
+                        <span>
+                            ${escapeHTML(
+                                booking.pickup
+                            )}
+                        </span>
+
+                    </div>
 
 
-            <p class="status">
+                    <div class="booking-detail">
 
-                <strong>Status:</strong>
+                        <strong>
+                            Drop-off
+                        </strong>
 
-                <span
-                    class="status-badge status-${booking.status}"
-                >
-                    ${booking.status}
-                </span>
+                        <span>
+                            ${escapeHTML(
+                                booking.dropoff
+                            )}
+                        </span>
 
-            </p>
+                    </div>
 
 
-            <div class="booking-actions">
+                    <div class="booking-detail">
 
+                        <strong>
+                            Date
+                        </strong>
+
+                        <span>
+                            ${escapeHTML(
+                                booking.date
+                            )}
+                        </span>
+
+                    </div>
+
+
+                    <div class="booking-detail">
+
+                        <strong>
+                            Time
+                        </strong>
+
+                        <span>
+                            ${escapeHTML(
+                                booking.time
+                            )}
+                        </span>
+
+                    </div>
+
+
+                    <div class="booking-detail">
+
+                        <strong>
+                            Passengers
+                        </strong>
+
+                        <span>
+                            ${escapeHTML(
+                                String(
+                                    booking.passengers
+                                )
+                            )}
+                        </span>
+
+                    </div>
+
+
+                    <div class="booking-detail">
+
+                        <strong>
+                            Vehicle
+                        </strong>
+
+                        <span>
+                            ${escapeHTML(
+                                booking.vehicle
+                            )}
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================
+                     STATUS
+                ================================== -->
+
+                <p class="status">
+
+                    <strong>
+                        Status:
+                    </strong>
+
+                    <span
+                        class="status-badge status-${booking.status}"
+                    >
+                        ${escapeHTML(
+                            booking.status
+                        )}
+                    </span>
+
+                </p>
+
+
+                <!-- =================================
+                     ACTION BUTTONS
+                ================================== -->
+
+                <div class="booking-actions">
+
+    ${
+        booking.status === "pending"
+            ? `
                 <button
-                    onclick="updateStatus(
-                        '${booking._id}',
-                        'confirmed'
-                    )"
+                    onclick="updateStatus('${booking._id}', 'confirmed')"
                 >
                     Confirm
                 </button>
 
-
                 <button
-                    onclick="updateStatus(
-                        '${booking._id}',
-                        'completed'
-                    )"
+                    onclick="updateStatus('${booking._id}', 'completed')"
                 >
                     Complete
                 </button>
 
-
                 <button
-                    onclick="updateStatus(
-                        '${booking._id}',
-                        'cancelled'
-                    )"
+                    onclick="updateStatus('${booking._id}', 'cancelled')"
                 >
                     Cancel
                 </button>
+              `
+            : ""
+    }
 
-
+    ${
+        booking.status === "confirmed"
+            ? `
                 <button
-                    onclick="deleteBooking(
-                        '${booking._id}'
-                    )"
+                    onclick="updateStatus('${booking._id}', 'completed')"
                 >
-                    Delete
+                    Complete
                 </button>
 
-            </div>
+                <button
+                    onclick="updateStatus('${booking._id}', 'cancelled')"
+                >
+                    Cancel
+                </button>
+              `
+            : ""
+    }
+
+    <button
+        onclick="deleteBooking('${booking._id}')"
+    >
+        Delete
+    </button>
+
+</div>
+
+            `;
 
 
-            <hr>
+            container.appendChild(
+                card
+            );
 
-        `;
+        }
+    );
+
+}
 
 
-        container.appendChild(card);
+/* =========================================
+   SEARCH + STATUS FILTER
+========================================= */
 
-    });
+function filterBookings() {
+
+    const searchInput =
+        document.getElementById(
+            "bookingSearch"
+        );
+
+
+    const statusInput =
+        document.getElementById(
+            "statusFilter"
+        );
+
+
+    const search =
+        searchInput
+            ? searchInput.value
+                .toLowerCase()
+                .trim()
+            : "";
+
+
+    const selectedStatus =
+        statusInput
+            ? statusInput.value
+            : "all";
+
+
+    const filteredBookings =
+        allBookings.filter(
+            function (booking) {
+
+
+                const name =
+                    String(
+                        booking.name || ""
+                    )
+                    .toLowerCase();
+
+
+                const phone =
+                    String(
+                        booking.phone || ""
+                    )
+                    .toLowerCase();
+
+
+                const matchesSearch =
+                    name.includes(search) ||
+                    phone.includes(search);
+
+
+                const matchesStatus =
+                    selectedStatus === "all" ||
+                    booking.status ===
+                        selectedStatus;
+
+
+                return (
+                    matchesSearch &&
+                    matchesStatus
+                );
+
+            }
+        );
+
+
+    displayBookings(
+        filteredBookings
+    );
 
 }
 
@@ -280,7 +562,7 @@ async function updateStatus(
 
         const response =
             await fetch(
-               `/api/bookings/${bookingId}/status`,
+                `/api/bookings/${bookingId}/status`,
                 {
                     method: "PATCH",
 
@@ -317,13 +599,7 @@ async function updateStatus(
         }
 
 
-        alert(
-            "Booking status updated to: " +
-            status
-        );
-
-
-        loadBookings();
+        await loadBookings();
 
 
     } catch (error) {
@@ -347,30 +623,43 @@ async function updateStatus(
    DELETE BOOKING
 ========================================= */
 
-async function deleteBooking(bookingId) {
+async function deleteBooking(
+    bookingId
+) {
 
-    const confirmed = confirm(
-        "Are you sure you want to delete this booking?"
-    );
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete this booking?"
+        );
+
 
     if (!confirmed) {
+
         return;
+
     }
 
-    console.log("Deleting booking:", bookingId);
 
     try {
 
-        const response = await fetch(
-           `/api/bookings/${bookingId}`,
-            {
-                method: "DELETE"
-            }
+        const response =
+            await fetch(
+                `/api/bookings/${bookingId}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Delete response:",
+            data
         );
 
-        const data = await response.json();
-
-        console.log("Delete response:", data);
 
         if (!data.success) {
 
@@ -382,9 +671,9 @@ async function deleteBooking(bookingId) {
             return;
         }
 
-        alert("Booking deleted successfully.");
 
-        loadBookings();
+        await loadBookings();
+
 
     } catch (error) {
 
@@ -393,11 +682,13 @@ async function deleteBooking(bookingId) {
             error
         );
 
+
         alert(
             "Unable to delete booking."
         );
 
     }
+
 }
 
 
@@ -414,330 +705,245 @@ function updateDashboardStats(
 
 
     const pending =
-        bookings.filter(function(booking) {
-
-            return booking.status === "pending";
-
-        }).length;
+        bookings.filter(
+            function (booking) {
+                return (
+                    booking.status ===
+                    "pending"
+                );
+            }
+        ).length;
 
 
     const confirmed =
-        bookings.filter(function(booking) {
-
-            return booking.status === "confirmed";
-
-        }).length;
+        bookings.filter(
+            function (booking) {
+                return (
+                    booking.status ===
+                    "confirmed"
+                );
+            }
+        ).length;
 
 
     const completed =
-        bookings.filter(function(booking) {
-
-            return booking.status === "completed";
-
-        }).length;
+        bookings.filter(
+            function (booking) {
+                return (
+                    booking.status ===
+                    "completed"
+                );
+            }
+        ).length;
 
 
     const cancelled =
-        bookings.filter(function(booking) {
-
-            return booking.status === "cancelled";
-
-        }).length;
-
-
-    document.getElementById(
-        "totalBookings"
-    ).textContent =
-        total;
+        bookings.filter(
+            function (booking) {
+                return (
+                    booking.status ===
+                    "cancelled"
+                );
+            }
+        ).length;
 
 
-    document.getElementById(
-        "pendingBookings"
-    ).textContent =
-        pending;
+    const totalElement =
+        document.getElementById(
+            "totalBookings"
+        );
 
 
-    document.getElementById(
-        "confirmedBookings"
-    ).textContent =
-        confirmed;
+    const pendingElement =
+        document.getElementById(
+            "pendingBookings"
+        );
 
 
-    document.getElementById(
-        "completedBookings"
-    ).textContent =
-        completed;
+    const confirmedElement =
+        document.getElementById(
+            "confirmedBookings"
+        );
 
 
-    document.getElementById(
-        "cancelledBookings"
-    ).textContent =
-        cancelled;
+    const completedElement =
+        document.getElementById(
+            "completedBookings"
+        );
+
+
+    const cancelledElement =
+        document.getElementById(
+            "cancelledBookings"
+        );
+
+
+    if (totalElement) {
+
+        totalElement.textContent =
+            total;
+
+    }
+
+
+    if (pendingElement) {
+
+        pendingElement.textContent =
+            pending;
+
+    }
+
+
+    if (confirmedElement) {
+
+        confirmedElement.textContent =
+            confirmed;
+
+    }
+
+
+    if (completedElement) {
+
+        completedElement.textContent =
+            completed;
+
+    }
+
+
+    if (cancelledElement) {
+
+        cancelledElement.textContent =
+            cancelled;
+
+    }
 
 }
+
+
 /* =========================================
-   SEARCH & FILTER
+   COPY BOOKING ID
 ========================================= */
 
-let allBookings = [];
+function copyBookingId(
+    bookingId,
+    button
+) {
+
+    navigator.clipboard
+        .writeText(bookingId)
+
+        .then(
+            function () {
+
+                const originalText =
+                    button.textContent;
 
 
-/* Save all bookings when they load */
-
-const originalDisplayBookings = displayBookings;
-
-displayBookings = function(bookings) {
-
-    allBookings = bookings;
-
-    originalDisplayBookings(bookings);
-
-};
+                button.textContent =
+                    "Copied!";
 
 
-/* Search */
+                setTimeout(
+                    function () {
 
-document.addEventListener("input", function(event) {
+                        button.textContent =
+                            originalText;
 
-    if (event.target.id !== "bookingSearch") {
-        return;
-    }
+                    },
+                    1500
+                );
 
-    filterBookings();
+            }
+        )
 
-});
+        .catch(
+            function (error) {
 
-
-/* Status filter */
-
-document.addEventListener("change", function(event) {
-
-    if (event.target.id !== "statusFilter") {
-        return;
-    }
-
-    filterBookings();
-
-});
+                console.error(
+                    "Copy failed:",
+                    error
+                );
 
 
-/* Filter bookings */
+                button.textContent =
+                    "Copy failed";
+
+
+                setTimeout(
+                    function () {
+
+                        button.textContent =
+                            "Copy";
+
+                    },
+                    1500
+                );
+
+            }
+        );
+
+}
+
+/* =========================================
+   SEARCH + STATUS FILTER
+========================================= */
 
 function filterBookings() {
 
     const searchInput =
         document.getElementById("bookingSearch");
 
-    const statusInput =
+    const statusFilter =
         document.getElementById("statusFilter");
 
-
-    const search =
-        searchInput.value
-            .toLowerCase()
-            .trim();
-
+    const searchText =
+        searchInput
+            ? searchInput.value.trim().toLowerCase()
+            : "";
 
     const selectedStatus =
-        statusInput.value;
+        statusFilter
+            ? statusFilter.value
+            : "all";
 
 
     const filteredBookings =
-        allBookings.filter(function(booking) {
+        allBookings.filter(function (booking) {
 
             const name =
-                String(booking.name || "")
-                    .toLowerCase();
+                String(booking.name || "").toLowerCase();
 
             const phone =
-                String(booking.phone || "")
-                    .toLowerCase();
-
+                String(booking.phone || "").toLowerCase();
 
             const matchesSearch =
-                name.includes(search) ||
-                phone.includes(search);
-
+                name.includes(searchText) ||
+                phone.includes(searchText);
 
             const matchesStatus =
                 selectedStatus === "all" ||
                 booking.status === selectedStatus;
 
-
-            return (
-                matchesSearch &&
-                matchesStatus
-            );
+            return matchesSearch && matchesStatus;
 
         });
 
 
-    displayBookingsOnly(
-        filteredBookings
-    );
-
+    displayBookings(filteredBookings);
 }
 
 
-/* Display filtered bookings without changing statistics */
-
-function displayBookingsOnly(bookings) {
-
-    const container =
-        document.getElementById("bookings");
-
-
-    if (
-        !bookings ||
-        bookings.length === 0
-    ) {
-
-        container.innerHTML =
-            "<p>No matching bookings found.</p>";
-
-        return;
-    }
-
-
-    container.innerHTML = "";
-
-
-    bookings.forEach(function(booking) {
-
-        const card =
-            document.createElement("div");
-
-
-        card.className =
-            "booking-card status-" +
-            booking.status;
-
-
-        card.innerHTML = `
-
-            <h2>${booking.name}</h2>
-
-            <p>
-                <strong>Phone:</strong>
-                ${booking.phone}
-            </p>
-
-            <p>
-                <strong>Pickup:</strong>
-                ${booking.pickup}
-            </p>
-
-            <p>
-                <strong>Drop-off:</strong>
-                ${booking.dropoff}
-            </p>
-
-            <p>
-                <strong>Date:</strong>
-                ${booking.date}
-            </p>
-
-            <p>
-                <strong>Time:</strong>
-                ${booking.time}
-            </p>
-
-            <p>
-                <strong>Passengers:</strong>
-                ${booking.passengers}
-            </p>
-
-            <p>
-                <strong>Vehicle:</strong>
-                ${booking.vehicle}
-            </p>
-
-            <p class="status">
-
-                <strong>Status:</strong>
-
-                <span class="status-badge status-${booking.status}">
-                    ${booking.status}
-                </span>
-
-            </p>
-
-            <div class="booking-actions">
-
-                <button
-                    onclick="updateStatus(
-                        '${booking._id}',
-                        'confirmed'
-                    )"
-                >
-                    Confirm
-                </button>
-
-                <button
-                    onclick="updateStatus(
-                        '${booking._id}',
-                        'completed'
-                    )"
-                >
-                    Complete
-                </button>
-
-                <button
-                    onclick="updateStatus(
-                        '${booking._id}',
-                        'cancelled'
-                    )"
-                >
-                    Cancel
-                </button>
-
-                <button
-                    onclick="deleteBooking(
-                        '${booking._id}'
-                    )"
-                >
-                    Delete
-                </button>
-
-            </div>
-
-            <hr>
-
-        `;
-
-
-        container.appendChild(card);
-
-    });
-
-}
 /* =========================================
-   COPY BOOKING ID
+   SAFE HTML TEXT
 ========================================= */
 
-function copyBookingId(bookingId, button) {
+function escapeHTML(value) {
 
-    navigator.clipboard.writeText(bookingId)
-        .then(function () {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
-            const originalText = button.textContent;
-
-            button.textContent = "Copied!";
-
-            setTimeout(function () {
-                button.textContent = originalText;
-            }, 1500);
-
-        })
-        .catch(function (error) {
-
-            console.error("Copy failed:", error);
-
-            button.textContent = "Copy failed";
-
-            setTimeout(function () {
-                button.textContent = "Copy";
-            }, 1500);
-
-        });
 }
