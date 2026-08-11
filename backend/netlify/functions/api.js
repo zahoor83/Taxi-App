@@ -14,7 +14,16 @@ app.use(cors());
 app.use(express.json());
 
 /* =================================
-   DATABASE CONNECTION
+   REQUEST LOG
+================================= */
+
+app.use((req, res, next) => {
+    console.log("API REQUEST:", req.method, req.originalUrl);
+    next();
+});
+
+/* =================================
+   DATABASE
 ================================= */
 
 app.use(async (req, res, next) => {
@@ -22,40 +31,48 @@ app.use(async (req, res, next) => {
         await connectDatabase();
         next();
     } catch (error) {
-        console.error("Database connection error:", error);
-        next(error);
+        console.error("DATABASE ERROR:", error.message);
+
+        res.status(500).json({
+            success: false,
+            message: "Database connection failed.",
+            error: error.message
+        });
     }
 });
 
 /* =================================
-   TEST ROUTE
+   TEST
 ================================= */
 
 app.get("/", (req, res) => {
-    res.json({
+    res.status(200).json({
         message: "Riviera Transfers API is running!",
         status: "success"
     });
 });
 
 /* =================================
-   BOOKING ROUTES
-
-   IMPORTANT:
-   Netlify redirects:
-
-   /api/bookings
-        ↓
-   /.netlify/functions/api/bookings
-
-   Therefore Express must use /bookings,
-   NOT /api/bookings.
+   BOOKINGS
 ================================= */
 
-app.use("/bookings", bookingRoutes);
+app.use("/api/bookings", bookingRoutes);
 
 /* =================================
-   NETLIFY FUNCTION
+   ERROR HANDLER
+================================= */
+
+app.use((err, req, res, next) => {
+    console.error("API ERROR:", err);
+
+    res.status(500).json({
+        success: false,
+        message: err.message || "Internal server error."
+    });
+});
+
+/* =================================
+   NETLIFY HANDLER
 ================================= */
 
 exports.handler = serverless(app);
