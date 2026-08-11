@@ -56,7 +56,9 @@ if (bookingForm) {
         event.preventDefault();
 
 
-        /* Get form values */
+        /* =====================================
+           GET FORM VALUES
+        ===================================== */
 
         const name = document.getElementById("name").value.trim();
         const phone = document.getElementById("phone").value.trim();
@@ -68,7 +70,9 @@ if (bookingForm) {
         const vehicle = document.getElementById("vehicle").value;
 
 
-        /* Basic validation */
+        /* =====================================
+           BASIC VALIDATION
+        ===================================== */
 
         if (
             !name ||
@@ -89,7 +93,9 @@ if (bookingForm) {
         }
 
 
-        /* Booking data */
+        /* =====================================
+           BOOKING DATA
+        ===================================== */
 
         const bookingData = {
 
@@ -105,7 +111,9 @@ if (bookingForm) {
         };
 
 
-        /* Show temporary message */
+        /* =====================================
+           SHOW SENDING MESSAGE
+        ===================================== */
 
         bookingMessage.textContent =
             "Sending your booking request...";
@@ -113,10 +121,15 @@ if (bookingForm) {
 
         try {
 
-            /* Send booking to backend */
+            /* =================================
+               SEND BOOKING TO PRODUCTION API
+
+               IMPORTANT:
+               Do NOT use localhost here.
+            ================================= */
 
             const response = await fetch(
-                "http://localhost:5000/api/bookings",
+                "/api/bookings",
                 {
                     method: "POST",
 
@@ -129,8 +142,16 @@ if (bookingForm) {
             );
 
 
+            /* =================================
+               READ SERVER RESPONSE
+            ================================= */
+
             const result = await response.json();
 
+
+            /* =================================
+               CHECK RESPONSE
+            ================================= */
 
             if (!response.ok) {
 
@@ -141,10 +162,12 @@ if (bookingForm) {
             }
 
 
-            /* Success */
+            /* =================================
+               SUCCESS
+            ================================= */
 
             bookingMessage.textContent =
-                result.message;
+                result.message || "Booking submitted successfully!";
 
 
             bookingForm.reset();
@@ -154,6 +177,10 @@ if (bookingForm) {
 
             console.error("Booking Error:", error);
 
+
+            /* =================================
+               ERROR
+            ================================= */
 
             bookingMessage.textContent =
                 "Unable to send booking. Please try again.";
