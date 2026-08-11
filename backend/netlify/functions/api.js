@@ -13,22 +13,23 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-/* ================================
+/* =================================
    DATABASE CONNECTION
-================================ */
+================================= */
 
 app.use(async (req, res, next) => {
     try {
         await connectDatabase();
         next();
     } catch (error) {
+        console.error("Database connection error:", error);
         next(error);
     }
 });
 
-/* ================================
+/* =================================
    TEST ROUTE
-================================ */
+================================= */
 
 app.get("/", (req, res) => {
     res.json({
@@ -37,14 +38,14 @@ app.get("/", (req, res) => {
     });
 });
 
-/* ================================
+/* =================================
    BOOKING ROUTES
-================================ */
+================================= */
 
 app.use("/api/bookings", bookingRoutes);
 
-/* ================================
-   EXPORT NETLIFY FUNCTION
-================================ */
+/* =================================
+   NETLIFY FUNCTION HANDLER
+================================= */
 
-module.exports = serverless(app);
+exports.handler = serverless(app);
