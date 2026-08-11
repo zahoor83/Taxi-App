@@ -3,19 +3,19 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
-dotenv.config();
-
 const connectDatabase = require("../../config/database");
 const bookingRoutes = require("../../routes/bookingRoutes");
+
+dotenv.config();
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-/* ================================
+/* =================================
    DATABASE CONNECTION
-================================ */
+================================= */
 
 app.use(async (req, res, next) => {
     try {
@@ -27,9 +27,9 @@ app.use(async (req, res, next) => {
     }
 });
 
-/* ================================
+/* =================================
    TEST ROUTE
-================================ */
+================================= */
 
 app.get("/", (req, res) => {
     res.json({
@@ -38,14 +38,24 @@ app.get("/", (req, res) => {
     });
 });
 
-/* ================================
+/* =================================
    BOOKING ROUTES
-================================ */
 
-app.use("/api/bookings", bookingRoutes);
+   IMPORTANT:
+   Netlify redirects:
 
-/* ================================
-   NETLIFY FUNCTION HANDLER
-================================ */
+   /api/bookings
+        ↓
+   /.netlify/functions/api/bookings
+
+   Therefore Express must use /bookings,
+   NOT /api/bookings.
+================================= */
+
+app.use("/bookings", bookingRoutes);
+
+/* =================================
+   NETLIFY FUNCTION
+================================= */
 
 exports.handler = serverless(app);
